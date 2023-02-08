@@ -1,0 +1,26 @@
+class:: FBNeuron
+summary:: Feedback neural network
+related:: TODO
+categories:: UGens>TODO
+
+description::
+
+Feedback neural network
+
+
+classmethods::
+
+method::ar, kr
+
+argument::TODO
+
+argument::TODO
+
+
+examples::
+
+code::
+
+{ FBNeuron.ar(/* TODO */) }.play
+
+::
