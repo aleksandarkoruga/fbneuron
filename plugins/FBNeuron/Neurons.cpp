@@ -103,12 +103,15 @@ namespace model
 	void NeuralNet::Update(const float& variation, const float& freq, const float& freqSpread, const float& mod, const float& mod2, const double& sampDur)
 	{
 		float outVal = 0.0;
+		model::Neuron::Layer* prevLayer=nullptr;
+
 		for (auto i = 0; i < m_nLayers; ++i)
 		{
-			const auto& prevLayer = m_net[(i + m_nLayers - 1) & (m_nLayers - 1)];
+			prevLayer = &(m_net[(i + m_nLayers - 1) & (m_nLayers - 1)]);
+
 			for (int j=0; j < m_net[i].size(); ++j)
 			{
-				outVal+=m_net[i][j].Update(prevLayer, variation,freq, (1.0f+freqSpread*static_cast<float>(j)/ static_cast<float>(m_net[i].size())), mod, mod2, sampDur);
+				outVal+=m_net[i][j].Update(*prevLayer, variation,freq, (1.0f+freqSpread*static_cast<float>(j)/ static_cast<float>(m_net[i].size())), mod, mod2, sampDur);
 			}
 		}
 		m_outVal = outVal / (m_nLayers*m_net[0].size());
