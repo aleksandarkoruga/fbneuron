@@ -18,12 +18,12 @@ void FBNeuron::next(int nSamples) {
     const float* variation = in(0);
     const float* freq = in(1);
     const float* freqSpread = in(2);
-    const float* mod = in(3);
-    const float* mod2 = in(4);
+    const float* modFM = in(3);
+    const float* crossFade = in(4);
     float* outbuf = out(0);
 
     for (int i = 0; i < nSamples; ++i) {
-        m_net->Update(sc_abs(variation[i]),freq[i],freqSpread[i],mod[i], mod2[i],sampleDur());
+        m_net->Update(sc_abs(variation[i]),freq[i],freqSpread[i],modFM[i], crossFade[i],sampleDur());
         outbuf[i] = m_net->GetSummedNodes();
      
     }
