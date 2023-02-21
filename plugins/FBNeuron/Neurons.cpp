@@ -46,7 +46,7 @@ namespace model
 
 	}
 
-	const float& Neuron::Update(const Layer& prevLayer, const float& variation, const float& freq, const float& freqSpread, const float& mod, const float& mod2, const double& sampDur)
+	const float& Neuron::Update(const Layer& prevLayer, const float& variation, const float& freq, const float& freqSpread, const float& modFM, const float& crossFade, const double& sampDur)
 	{
 		float prevValue = m_value;
 		m_value = 0.0f;
@@ -56,7 +56,7 @@ namespace model
 			m_value += m_bias[i] * prevLayer[i].GetValue() + m_offset[i];
 		}
 		auto phase = static_cast<float>(m_phase * PHASOR_DIV);
-		m_value =  std::sin(static_cast<float>(M_PI)*2.0f*(   (phase*m_value*mod2) + (1.0f - mod2)* (phase + m_value)     )  );
+		m_value =  std::sin(static_cast<float>(M_PI)*2.0f*(   (phase*m_value*crossFade) + (1.0f - crossFade)* (phase + m_value)     )  );
 
 		if (std::abs(m_value - prevValue) < variation*sampDur)
 		{
@@ -65,7 +65,7 @@ namespace model
 		else { ResetCount(); }
 		
 
-		m_phase += static_cast<unsigned long long>(static_cast<double> (PHASOR_MAX)*static_cast<double>( freq*sampDur*freqSpread)*  ((1.0 +static_cast<double>( mod) *static_cast<double> (m_value))));
+		m_phase += static_cast<unsigned long long>(static_cast<double> (PHASOR_MAX)*static_cast<double>( freq*sampDur*freqSpread)*  ((1.0 +static_cast<double>( modFM) *static_cast<double> (m_value))));
 		m_phase &= PHASOR_WRAP;
 
 
@@ -100,7 +100,7 @@ namespace model
 		
 	}
 
-	void NeuralNet::Update(const float& variation, const float& freq, const float& freqSpread, const float& mod, const float& mod2, const double& sampDur)
+	void NeuralNet::Update(const float& variation, const float& freq, const float& freqSpread, const float& modFM, const float& crossFade, const double& sampDur)
 	{
 		float outVal = 0.0;
 		model::Neuron::Layer* prevLayer=nullptr;
@@ -111,7 +111,7 @@ namespace model
 
 			for (int j=0; j < m_net[i].size(); ++j)
 			{
-				outVal+=m_net[i][j].Update(*prevLayer, variation,freq, (1.0f+freqSpread*static_cast<float>(j)/ static_cast<float>(m_net[i].size())), mod, mod2, sampDur);
+				outVal+=m_net[i][j].Update(*prevLayer, variation,freq, (1.0f+freqSpread*static_cast<float>(j)/ static_cast<float>(m_net[i].size())), modFM, crossFade, sampDur);
 			}
 		}
 		m_outVal = outVal / (m_nLayers*m_net[0].size());

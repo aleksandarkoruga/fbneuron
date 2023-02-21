@@ -22,7 +22,7 @@ namespace model {
 		inline const float& GetValue() const { return m_value; };
 		void ChangeParams();
 		inline void ResetCount() { m_count = 0ULL; }
-		const float& Update(const Layer& prevLayer, const float& variation, const float& freq, const float& freqSpread, const float& mod, const float& mod2, const double& sampDur);
+		const float& Update(const Layer& prevLayer, const float& variation, const float& freq, const float& freqSpread, const float& modFM, const float& crossFade, const double& sampDur);
 		int EnumerateNeurons() { return m_nInput; }
 
 	protected:
@@ -47,7 +47,7 @@ namespace model {
 
 		NeuralNet();
 		NeuralNet(int size);
-		void Update(const float& variation, const float& freq, const float& freqSpread, const float& mod, const float& mod2, const double& sampDur);
+		void Update(const float& variation, const float& freq, const float& freqSpread, const float& modFM, const float& crossFade, const double& sampDur);
 		inline const Neuron::Layer& GetLayer(unsigned int layer) { return m_net[layer&(m_nLayers-1U)]; }
 		inline const float& GetSummedNodes() { return m_outVal; };
 	protected:
