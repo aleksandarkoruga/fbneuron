@@ -1,7 +1,7 @@
 FBNeuron : UGen {
-	*ar { |input, gain|
+	*ar { |variation, frequency, spread, modulation, crossfade|
 		/* TODO */
-		^this.multiNew('audio', input, gain);
+		^this.multiNew('audio', variation, frequency, spread, modulation.clip(0.0,1.0), crossfade.clip(0.0,1.0));
 	}
 	checkInputs {
 		/* TODO */

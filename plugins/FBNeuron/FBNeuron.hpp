@@ -4,6 +4,7 @@
 #pragma once
 
 #include "SC_PlugIn.hpp"
+#include "Neurons.hpp"
 
 namespace FBNeuron {
 
@@ -17,7 +18,7 @@ public:
 private:
     // Calc function
     void next(int nSamples);
-
+    model::NeuralNet m_net;
     // Member variables
 };
 
