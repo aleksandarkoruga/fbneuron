@@ -3,12 +3,13 @@
 
 #include "SC_PlugIn.hpp"
 #include "FBNeuron.hpp"
+#include "Neurons.hpp"
 
 static InterfaceTable* ft;
 
 namespace FBNeuron {
 
-FBNeuron::FBNeuron() : m_net() {
+FBNeuron::FBNeuron() : m_net(std::make_unique<model::NeuralNet>()) {
     mCalcFunc = make_calc_function<FBNeuron, &FBNeuron::next>();
     next(1);
 }
@@ -22,9 +23,8 @@ void FBNeuron::next(int nSamples) {
     float* outbuf = out(0);
 
     for (int i = 0; i < nSamples; ++i) {
-        auto val = sc_abs(variation[i]);
-        m_net.Update(val,freq[i],freqSpread[i],mod[i], mod2[i],sampleDur());
-        outbuf[i] = m_net.GetSummedNodes();// *gain[i];
+        m_net->Update(sc_abs(variation[i]),freq[i],freqSpread[i],mod[i], mod2[i],sampleDur());
+        outbuf[i] = m_net->GetSummedNodes();
      
     }
 }

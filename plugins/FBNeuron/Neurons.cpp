@@ -7,7 +7,7 @@
 
 #define DEFAULT_RANGE 4.0f
 #define DEFAULT_RANGE_INV 0.25f
-# define M_PI           3.14159265358979323846  /* pi */
+#define M_PI           3.14159265358979323846  /* pi */
 #define PHASOR_MAX 0x07FFFFFFFFFFF  
 #define PHASOR_WRAP PHASOR_MAX-0x01
 #define PHASOR_DIV  1.0/(double)PHASOR_MAX
@@ -15,13 +15,13 @@
 namespace model
 {
 
-	Neuron::Neuron():m_nInput(DEFAULT_NET_SIZE), m_value(0.0), m_phase(0.0f), m_count(100000000000ULL), m_bias(std::vector<float>(DEFAULT_NET_SIZE, 1.0f)), m_offset(std::vector<float>(DEFAULT_NET_SIZE, 0.0f))
+	Neuron::Neuron():m_nInput(DEFAULT_NET_SIZE), m_value(0.0), m_phase(0ULL), m_count(100000000000ULL), m_bias(std::vector<float>(DEFAULT_NET_SIZE, 1.0f)), m_offset(std::vector<float>(DEFAULT_NET_SIZE, 0.0f))
 	{
 		ChangeParams();
 		ResetCount();
 	}
 	
-	Neuron::Neuron(int size): m_nInput(size), m_value(0.0), m_phase(0.0f), m_count(100000000000ULL), m_bias(std::vector<float>(size, 1.0f)), m_offset(std::vector<float>(size, 0.0f))
+	Neuron::Neuron(int size): m_nInput(size), m_value(0.0), m_phase(0ULL), m_count(100000000000ULL), m_bias(std::vector<float>(size, 1.0f)), m_offset(std::vector<float>(size, 0.0f))
 	{
 		ChangeParams();
 		ResetCount();

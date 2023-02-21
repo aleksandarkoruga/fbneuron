@@ -4,7 +4,8 @@
 #pragma once
 
 #include "SC_PlugIn.hpp"
-#include "Neurons.hpp"
+#include <memory>
+namespace model { class NeuralNet; }
 
 namespace FBNeuron {
 
@@ -18,7 +19,7 @@ public:
 private:
     // Calc function
     void next(int nSamples);
-    model::NeuralNet m_net;
+    std::unique_ptr<model::NeuralNet> m_net;
     // Member variables
 };
 
